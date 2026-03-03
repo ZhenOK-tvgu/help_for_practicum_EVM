@@ -1,4 +1,6 @@
 #pragma once
+#include <fstream>
+using namespace std;
 class Note
 {
 public:
@@ -7,6 +9,11 @@ public:
 	int birthday[3];
 	Note(const char*, int a, int b);
 	Note();
-	~Note();
+	friend ostream& operator<<(ostream& os, const Note& m) {
+		return os << m.name << " " << m.phone_number << " " << m.birthday;
+	}
+	friend istream& operator>>(ostream& os, const Note& m) {
+		return os >> m.name >> " " >> m.phone_number >> " " >> m.birthday;
+	}
 };
 

@@ -2,10 +2,23 @@
 //
 
 #include <iostream>
+#include <fstream>
+#include "Note.h"
+using namespace std;
 
 int main()
 {
-    std::cout << "Hello World!\n";
+	ifstream in = ifstream("text.txt");
+	if (!in) return 1;
+	Note gr[10];
+	int n = 0;
+	while (in >> gr[n])n++;
+	for (Note m; gr;) {
+		cout << m << "\n";
+	}
+	inl.seekg(0, inl.end);
+	int dl_fila = inl.tellg();
+	of.write((char*)gr)
 }
 
 // Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"
