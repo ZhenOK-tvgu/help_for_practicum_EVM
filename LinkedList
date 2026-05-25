@@ -1,0 +1,117 @@
+#ifndef LINKEDLIST_H
+#define LINKEDLIST_H
+#include <iostream>
+#include "Marsh.h"
+using namespace std;
+
+template <class T>
+class LinkedList {
+    class Node {
+    public:
+        T info;
+        Node* next = nullptr;
+        Node(T a) : info(a), next(nullptr) {}
+        Node(T a, Node* next) : info(a), next(next) {}
+    };
+public:
+    Node* head = nullptr;
+    LinkedList();
+    bool isEmpty();
+    void add(T a);
+    void addEnd(T a);
+    bool search(T a);
+    void remove(T a);
+    void addSorted(T a);
+    void print();
+    void readFromFile(string filename);
+};
+
+template <class T>
+inline LinkedList<T>::LinkedList() {
+    head = nullptr;
+}
+
+template <class T>
+inline bool LinkedList<T>::isEmpty() {
+    return head == nullptr;
+}
+
+template <class T>
+inline void LinkedList<T>::add(T a) {
+    Node* t = new Node(a, head);
+    head = t;
+}
+
+template <class T>
+inline void LinkedList<T>::addEnd(T a) {
+    Node* t = new Node(a);
+    if (!head) {
+        head = t; return;
+    }
+    Node* current = head;
+    while (current->next) {
+        current = current->next;
+    }
+    current->next = t;
+}
+
+template <class T>
+inline bool LinkedList<T>::search(T a) {
+    for (Node* t = head; t; t = t->next) {
+        if (t->info == a) return true;
+    }
+    return false;
+}
+
+template <class T>
+inline void LinkedList<T>::remove(T a) {
+    if (!head) return;
+    if (head->info == a) {
+        Node* t = head;
+        head = head->next;
+        delete t;
+        return;
+    }
+    for (Node* t = head; t->next; t = t->next) {
+        if (t->next->info == a) {
+            Node* del = t->next;
+            t->next = t->next->next;
+            delete del;
+            return;
+        }
+    }
+}
+
+template <class T>
+inline void LinkedList<T>::addSorted(T a) {
+    Node* t = new Node(a);
+    if (!head || head->info >= a) {
+        t->next = head;
+        head = t;
+        return;
+    }
+    Node* current = head;
+    while (current->next && current->next->info < a) {
+        current = current->next;
+    }
+    t->next = current->next;
+    current->next = t;
+}
+
+template <class T>
+inline void LinkedList<T>::print() {
+    for (Node* t = head; t; t = t->next) cout << t->info << "\n";
+}
+
+template <>
+inline void LinkedList<Marsh>::readFromFile(string filename) {
+    ifstream fin(filename);
+    string s, f;
+    int n;
+    while (fin >> s >> f >> n) {
+        addEnd(Marsh(s, f, n));
+    }
+    fin.close();
+}
+
+#endif // LINKEDLIST_H
