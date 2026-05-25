@@ -1,0 +1,32 @@
+#ifndef MARSH_H
+#define MARSH_H
+#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
+
+class Marsh {
+public:
+    string start;
+    string finish;
+    int num;
+    Marsh() : start(""), finish(""), num(0) {}
+    Marsh(string s, string f, int n) : start(s), finish(f), num(n) {}
+    friend ostream& operator<<(ostream& os, Marsh& m) {
+        return os << m.start << " " << m.finish << " " << m.num;
+    }
+    bool operator==(Marsh& m) {
+        return start == m.start && finish == m.finish && num == m.num;
+    }
+    bool operator!=(Marsh& m) {
+        return !(*this == m);
+    }
+    bool operator>=(Marsh& m) {
+        return start >= m.start;
+    }
+    bool operator<(Marsh& m) {
+        return start < m.start;
+    }
+};
+
+#endif // MARSH_H
