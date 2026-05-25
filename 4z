@@ -1,0 +1,33 @@
+#include <iostream>
+using namespace std;
+#include "LinkedList.h"
+
+int main() {
+    LinkedList<Marsh> list;
+
+    list.readFromFile("text.txt");
+
+    cout << "All routes:\n";
+    list.print();
+
+    Marsh searchRoute("Moscow", "Tver", 2300);
+    cout << "\nSearch Moscow Tver 2300: " 
+         << (list.search(searchRoute) ? "found" : "not found") << endl;
+
+    Marsh removeRoute("Moscow", "Tver", 2300);
+    list.remove(removeRoute);
+    cout << "\nAfter remove Moscow Tver 2300:\n";
+    list.print();
+
+    list.add(Marsh("Piter", "Tver", 100));
+    cout << "\nAfter add Piter Tver 100 to head:\n";
+    list.print();
+
+    list.addEnd(Marsh("Tver", "Piter", 101));
+    cout << "\nAfter add Tver Piter 101 to end:\n";
+    list.print();
+
+    cout << "\nIs empty: " << (list.isEmpty() ? "yes" : "no") << endl;
+
+    return 0;
+}
